@@ -60,6 +60,29 @@ int Graph::BFS(int s, int e) {
      * Your Brilliant solution code here!
      * 
      * * * * * * * * * * * * * * * * * * * * * * * */
+    if (s < 0 || e < 0 || s >= V || e >= V) return 0;
+    vector<int> vis(V, 0);
+    vector<int> d(V, -1);
+    list<int> q;
+    vis[s] = 1;
+    d[s] = 0;
+    q.push_back(s);
+    while (!q.empty()) {
+        int x = q.front();
+        q.pop_front();
+        if (x == e) {
+            return d[x];
+        }
+        for (int y : adj[x]) {
+            if (y >= 0 && y < V) {
+                if (vis[y] == 0) {
+                    vis[y] = 1;
+                    d[y] = d[x] + 1;
+                    q.push_back(y);
+                }
+            }
+        }
+    }
 
     // Return 0 if target vertex was not reachable
     return 0;
